@@ -25,9 +25,8 @@ class ContactsFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val adapter = ContactsAdapter() {
-            //mainActivityDelegate.openDocument(it)
-        }
+        val adapter = ContactsAdapter() {}
+
         contactsRecyclerView.adapter = adapter
 
         viewModel = ViewModelProviders.of(this, ContactsSampleAppViewModelFactory)
