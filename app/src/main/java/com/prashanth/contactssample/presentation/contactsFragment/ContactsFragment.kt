@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.prashanth.contactssample.R
 import com.prashanth.contactssample.framework.ContactsSampleAppViewModelFactory
@@ -29,9 +30,9 @@ class ContactsFragment: Fragment() {
 
         contactsRecyclerView.adapter = adapter
 
-        viewModel = ViewModelProviders.of(this, ContactsSampleAppViewModelFactory)
+        viewModel = ViewModelProvider(this, ContactsSampleAppViewModelFactory)
             .get(ContactsViewModel::class.java)
-        viewModel.contacts.observe(this, Observer { adapter.update(it) })
+        viewModel.contacts.observe(viewLifecycleOwner, Observer { adapter.update(it) })
         viewModel.getAllContacts()
 
         fab.setOnClickListener {
