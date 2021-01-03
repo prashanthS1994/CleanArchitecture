@@ -1,4 +1,4 @@
-package com.prashanth.contactssample.presentation.contactsFragment
+package com.prashanth.contactssample
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -14,6 +14,7 @@ class TestCoroutineRule: TestRule {
     @ExperimentalCoroutinesApi
     private val testCoroutineScope = TestCoroutineScope(testCoroutineDispatcher)
 
+    @ExperimentalCoroutinesApi
     override fun apply(base: Statement?, description: Description?) = object: Statement() {
         @Throws(Throwable::class)
         override fun evaluate() {
@@ -26,6 +27,7 @@ class TestCoroutineRule: TestRule {
         }
     }
 
+    @ExperimentalCoroutinesApi
     fun runBlockingTest(block: suspend TestCoroutineScope.() -> Unit) =
         testCoroutineScope.runBlockingTest { (block()) }
 }

@@ -1,32 +1,27 @@
-package com.prashanth.contactssample.presentation.contactsFragment;
+package com.prashanth.contactssample.presentation.contactsFragment
 
-import android.app.Application;
-import androidx.lifecycle.AndroidViewModel
+import android.app.Application
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.prashanth.contactssample.framework.ContactsSampleAppViewModel
-
-import com.prashanth.contactssample.framework.Interactors;
+import com.prashanth.contactssample.framework.Interactors
 import com.prashanth.core.domain.Contact
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class ContactsViewModel(application:Application, interactors:Interactors):
     ContactsSampleAppViewModel(application, interactors) {
 
-    val contacts: MutableLiveData<List<Contact>> = MutableLiveData()
+    private val _contacts: MutableLiveData<List<Contact>> = MutableLiveData()
+    val contacts: LiveData<List<Contact>>
+        get() = _contacts
 
     fun getAllContacts() {
-        GlobalScope.launch { contacts.postValue(interactors.getAllContacts()) }
+        runBlocking { _contacts.postValue(interactors.getAllContacts()) }
     }
 
     fun addContact(contact: Contact) {
-        GlobalScope.launch {
-            withContext(Dispatchers.IO) {
+        runBlocking {
                 interactors.addContact(contact)
-            }
-
             getAllContacts()
         }
     }

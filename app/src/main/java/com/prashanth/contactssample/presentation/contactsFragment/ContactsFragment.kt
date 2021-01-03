@@ -5,16 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.prashanth.contactssample.R
 import com.prashanth.contactssample.framework.ContactsSampleAppViewModelFactory
+import com.prashanth.core.domain.Contact
 import kotlinx.android.synthetic.main.fragment_contacts.*
 
 class ContactsFragment: Fragment() {
     companion object {
-        fun newInstance() = ContactsFragment()
+        var count = 0
     }
 
     private lateinit var viewModel: ContactsViewModel
@@ -26,17 +25,18 @@ class ContactsFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val adapter = ContactsAdapter() {}
+        val adapter = ContactsAdapter {}
 
         contactsRecyclerView.adapter = adapter
 
         viewModel = ViewModelProvider(this, ContactsSampleAppViewModelFactory)
             .get(ContactsViewModel::class.java)
-        viewModel.contacts.observe(viewLifecycleOwner, Observer { adapter.update(it) })
+        viewModel.contacts.observe(viewLifecycleOwner,  { adapter.update(it) })
         viewModel.getAllContacts()
 
         fab.setOnClickListener {
-        //TODO: Add implementation to add contact
+            val contact = Contact("contact${++count}", "12584${count}")
+            viewModel.addContact(contact)
         }
     }
 }

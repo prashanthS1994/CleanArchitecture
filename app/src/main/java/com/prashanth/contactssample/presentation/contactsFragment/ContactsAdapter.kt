@@ -1,6 +1,5 @@
 package com.prashanth.contactssample.presentation.contactsFragment
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ class ContactsAdapter(
     private val itemClickListener: (Contact) -> Unit
 ) : RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
 
-    val TAG = "ContactsAdapter"
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val contactName: TextView = view.contactName
         val phoneNumber: TextView = view.contactPhoneNumber
@@ -39,7 +37,6 @@ class ContactsAdapter(
     fun update(newContacts: List<Contact>) {
         contacts.clear()
         contacts.addAll(newContacts)
-        Log.d(TAG, "Size of list: ${newContacts.size}")
         notifyDataSetChanged()
     }
 }

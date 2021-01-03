@@ -8,11 +8,11 @@ object ContactsSampleAppViewModelFactory: ViewModelProvider.Factory {
 
     lateinit var application: Application
 
-    lateinit var interactors: Interactors
+    private lateinit var interactors: Interactors
 
     fun inject(application: Application, interactors1: Interactors) {
         ContactsSampleAppViewModelFactory.application = application
-        ContactsSampleAppViewModelFactory.interactors = interactors1
+        this.interactors = interactors1
     }
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
